@@ -7,7 +7,7 @@
     "test_iteration": 25000,
     "densify": 3,
     "desicnt": 12,
-    "duration": 50,
+    "duration": 50, 
     "rgbfunction": "None",
     "loader": "technicolor",
     "rdpip": "train_ours_lite"

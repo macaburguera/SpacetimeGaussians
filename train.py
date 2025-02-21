@@ -61,6 +61,9 @@ def train(dataset, opt, pipe, saving_iterations, debug_from, densify=0, duration
     gaussians.addsphpointsscale = opt.addsphpointsscale 
     gaussians.raystart = opt.raystart
 
+    print(opt)
+    print(opt.batch)
+
 
 
 
@@ -101,6 +104,7 @@ def train(dataset, opt, pipe, saving_iterations, debug_from, densify=0, duration
     progress_bar = tqdm(range(first_iter, opt.iterations), desc="Training progress")
     first_iter += 1
 
+
     flag = 0
     flagtwo = 0
     depthdict = {}
@@ -130,6 +134,11 @@ def train(dataset, opt, pipe, saving_iterations, debug_from, densify=0, duration
     with torch.no_grad():
         timeindex = 0 # 0 to 49
         viewpointset = traincamdict[timeindex]
+        print("batch")
+        print(opt.batch)
+        print("viewpointset")
+        print(viewpointset)
+        print(len(viewpointset))
         for viewpoint_cam in viewpointset:
             render_pkg = render(viewpoint_cam, gaussians, pipe, background,  override_color=None,  basicfunction=rbfbasefunction, GRsetting=GRsetting, GRzer=GRzer)
             
@@ -155,6 +164,8 @@ def train(dataset, opt, pipe, saving_iterations, debug_from, densify=0, duration
     selectedlength = 2
     lasterems = 0 
     gtisint8 = getgtisint8()
+    print(f"Viewpoints available: {len(viewpointset)}, Requested batch size: {opt.batch}")
+
 
     for iteration in range(first_iter, opt.iterations + 1):        
         if iteration ==  opt.emsstart:
@@ -172,6 +183,7 @@ def train(dataset, opt, pipe, saving_iterations, debug_from, densify=0, duration
             gaussians.zero_gradient_cache()
             timeindex = randint(0, duration-1) # 0 to 49
             viewpointset = traincamdict[timeindex]
+
             camindex = random.sample(viewpointset, opt.batch)
 
             for i in range(opt.batch):

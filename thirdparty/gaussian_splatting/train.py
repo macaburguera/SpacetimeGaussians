@@ -45,6 +45,9 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
     iter_end = torch.cuda.Event(enable_timing = True)
 
     viewpoint_stack = None
+
+
+    
     ema_loss_for_log = 0.0
     progress_bar = tqdm(range(first_iter, opt.iterations), desc="Training progress")
     first_iter += 1
@@ -75,6 +78,26 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
         # Pick a random Camera
         if not viewpoint_stack:
             viewpoint_stack = scene.getTrainCameras().copy()
+            if len(viewpoint_stack) == 0:
+                raise ValueError("Error: No viewpoints available for training.")
+
+            elif len(viewpoint_stack) == 1:
+                viewpoint_cam = viewpoint_stack.pop(0)  # Just take the only available one
+
+            else:
+                viewpoint_cam = viewpoint_stack.pop(randint(0, len(viewpoint_stack)-1))
+
+
+        print(f"DEBUG: Number of available viewpoints: {len(viewpoint_stack)}")
+        if len(viewpoint_stack) == 0:
+            raise ValueError("Error: No viewpoints available for training. Check getTrainCameras().")
+
+
+
+        print(f"Available viewpoints: {len(viewpoint_stack)}")
+        if len(viewpoint_stack) == 0:
+            raise ValueError("Error: No viewpoints available for training. Check getTrainCameras().")
+
         viewpoint_cam = viewpoint_stack.pop(randint(0, len(viewpoint_stack)-1))
 
         # Render

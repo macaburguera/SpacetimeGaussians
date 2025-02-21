@@ -1,0 +1,15 @@
+LICENSE
+README.md
+setup.py
+SpacetimeGaussians.egg-info/PKG-INFO
+SpacetimeGaussians.egg-info/SOURCES.txt
+SpacetimeGaussians.egg-info/dependency_links.txt
+SpacetimeGaussians.egg-info/top_level.txt
+script/__init__.py
+script/post.py
+script/pre_immersive_distorted.py
+script/pre_immersive_undistorted.py
+script/pre_n3d.py
+script/pre_no_prior.py
+script/pre_technicolor.py
+script/utils_pre.py
